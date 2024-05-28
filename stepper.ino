@@ -10,7 +10,6 @@ void setup() {
 }
 
 void loop() {
-  Serial.println("--------------------");
   Serial.println("Sensor reading from input pin:");
   Serial.println(inputPin);
 
