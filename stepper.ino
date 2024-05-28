@@ -7,16 +7,17 @@ int currentOutputPin = outputPinA;
 int currentMode = LOW;
 
 void setup() {
-  pinMode(inputPin, INPUT)
-  pinMode(outputPinA, OUTPUT)
-  pinMode(outputPinB, OUTPUT)
+  Serial.begin(9600);
+  pinMode(inputPin, INPUT);
+  pinMode(outputPinA, OUTPUT);
+  pinMode(outputPinB, OUTPUT);
 }
 
 void loop() {
   Serial.println("Sensor reading from input pin:");
   Serial.println(inputPin);
 
-  int sensorReading = analogRead(inputPin);
+  int sensorReading = digitalRead(inputPin);
   Serial.println("Sensor reading:");
   Serial.println(sensorReading);
 
@@ -33,7 +34,7 @@ void loop() {
       currentOutputPin = outputPinA;
     }
 
-    currentOutputPinValue = digitalRead(currentOutputPin);
+    int currentOutputPinValue = digitalRead(currentOutputPin);
     if (currentOutputPinValue == LOW) {
       digitalWrite(currentOutputPin, HIGH);
     } else {
@@ -42,5 +43,5 @@ void loop() {
 
  
   }
-  delay(000);
+  delay(1000);
 }
