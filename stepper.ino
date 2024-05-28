@@ -4,9 +4,12 @@ const int outputPinB = 1;
 const int threshold = 65;
 
 int currentOutputPin = outputPinA;
+int currentMode = LOW;
 
 void setup() {
-  Serial.begin(9600);
+  pinMode(inputPin, INPUT)
+  pinMode(outputPinA, OUTPUT)
+  pinMode(outputPinB, OUTPUT)
 }
 
 void loop() {
@@ -29,6 +32,15 @@ void loop() {
       Serial.println(outputPinA);
       currentOutputPin = outputPinA;
     }
+
+    currentOutputPinValue = digitalRead(currentOutputPin);
+    if (currentOutputPinValue == LOW) {
+      digitalWrite(currentOutputPin, HIGH);
+    } else {
+      digitalWrite(currentOutputPin, LOW);
+    }
+
+ 
   }
-  delay(1000);
+  delay(000);
 }
