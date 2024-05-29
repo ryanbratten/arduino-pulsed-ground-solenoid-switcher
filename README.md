@@ -16,7 +16,6 @@ A boolean solenoidState keeps track of which solenoid is currently active.
 The loop function reads the state of the input pin.
 If the input is HIGH, it checks if the interval has passed using millis() and switches the solenoids accordingly.
 If the input is LOW, both solenoids are turned off.
-This sketch ensures that the solenoids switch at a frequency of 60 Hz, sharing the load equally. Adjust the pin numbers and the input conditions according to your specific hardware setup.
 
 ## Hardware Components
 
@@ -65,33 +64,86 @@ This sketch ensures that the solenoids switch at a frequency of 60 Hz, sharing t
 
 ## Circuit Schematic
 
-Here is a simple schematic to help you visualize the connections:
-
 ```
-               +12V
-                |
-               (|)
-               Solenoid1
-               (|)
-                |
-               ---->|----> D1 (Flyback diode)
-                |         |
-               (|)       (|)
-              |         |
-              |         |
-Arduino       |         |       +12V
------------| |       | |
-           |         |
-        R1 |         |  R2
-        _/\/\/\_____\/
-       |     (       )  |
-      3| MOSFET1    4| MOSFET2
-        |  D        |  D
-        |           |
-        |           |
-       (|          (|
-        |           |
-       GND         GND
++12V
+ |
+ +------+
+ |      |
+ |     (|)
+ |   Solenoid1
+ |     (|)
+ |      |
+ |      +----|>|----+
+ |      |    D1     |
+ |      |           |
+ |      |           |
+ |      |           |
+ |      |           |
+ |      |           |
+ |      |          (|)
+ |      |       MOSFET1
+ |      |        (IRF540)
+ |      |           |
+ |      |           |
+ |      |           |
+ |      |           |
+ |      |           |
+ |      |          GND
+ |      |
+ |      +------+
+ |             |
+ |            (|)
+ |         Solenoid2
+ |            (|)
+ |             |
+ |             +----|>|----+
+ |             |    D2     |
+ |             |           |
+ |             |           |
+ |             |           |
+ |             |           |
+ |             |           |
+ |             |          (|)
+ |             |       MOSFET2
+ |             |        (IRF540)
+ |             |           |
+ |             |           |
+ |             |           |
+ |             |           |
+ |             |           |
+ |             |          GND
+ |
+ GND
+
+Arduino
++----------------+
+|                |
+|  +----+        |
+|  |    |        |
+|  | 2  |--------+
+|  |    |
+|  | 3  |------------------+
+|  |    |       |          |
+|  | 4  |-------|--------+ |
+|  +----+       |        | |
+|               |        | |
+|               R1       | R2
+|               |        | |
+|               +---/\/--+ |
+|               |    10k  | |
+|               |         | |
+|               |        | |
+|               |        | |
+|               |        | |
+|              G1       G2
+|           MOSFET1   MOSFET2
+|           (Gate)    (Gate)
++----------------+
+
+Notes:
+- G1 and G2 are the gates of MOSFET1 and MOSFET2 respectively.
+- D1 and D2 are flyback diodes (1N4007).
+- R1 and R2 are 10k ohm resistors.
 ```
 
 ## Component Descriptions:
