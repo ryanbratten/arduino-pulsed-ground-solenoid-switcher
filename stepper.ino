@@ -1,6 +1,6 @@
 const int inputPin = A0;
-const int outputPinA = 0;
-const int outputPinB = 1;
+const int outputPinA = 3;
+const int outputPinB = 4;
 
 unsigned long previousMillis = 0;
 const long interval = 1000 / 60;
