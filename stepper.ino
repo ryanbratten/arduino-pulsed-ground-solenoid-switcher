@@ -1,47 +1,60 @@
 const int inputPin = A0;
 const int outputPinA = 0;
 const int outputPinB = 1;
-const int threshold = 65;
 
-int currentOutputPin = outputPinA;
-int currentMode = LOW;
+unsigned long previousMillis = 0;
+const long interval = 1000 / 60;
+bool solenoidState = false;
 
 void setup() {
   Serial.begin(9600);
   pinMode(inputPin, INPUT);
   pinMode(outputPinA, OUTPUT);
   pinMode(outputPinB, OUTPUT);
+
+  digitalWrite(outputPinA, LOW);
+  digitalWrite(outputPinB, LOW);
 }
 
 void loop() {
   Serial.println("Sensor reading from input pin:");
   Serial.println(inputPin);
 
-  int sensorReading = digitalRead(inputPin);
-  Serial.println("Sensor reading:");
-  Serial.println(sensorReading);
+  int inputState = digitalRead(inputPin);
+  Serial.println("Current input state of:");
+  Serial.println(inputState);
 
-  if (sensorReading >= threshold) {
-    Serial.println("Sensor reading has reached a threshold of:");
-    Serial.println(threshold);
-    Serial.println("Switching to output pin:");
+  if (inputState == HIGH) {
+    unsigned long currentMillis = millis();
 
-    if (currentOutputPin == outputPinA) {
-      Serial.println(outputPinB);
-      currentOutputPin = outputPinB;
-    } else {
-      Serial.println(outputPinA);
-      currentOutputPin = outputPinA;
+    if (currentMillis - previousMillis >= interval) {
+      previousMillis = currentMillis;
+
+      solenoidState = !solenoidState;
+      Serial.println("Current solenoid state of:");
+      Serial.println(solenoidState);
+
+      if (solenoidState) {
+        Serial.println("Switching on output pin:");
+        Serial.println(outputPinA);
+        digitalWrite(outputPinA, HIGH);
+
+        Serial.println("Switching off output pin:");
+        Serial.println(outputPinB);
+        digitalWrite(outputPinB, LOW);
+      } else {
+        Serial.println("Switching off output pin:");
+        Serial.println(outputPinA);
+        digitalWrite(outputPinA, LOW);
+
+        Serial.println("Switching on output pin:");
+        Serial.println(outputPinB);
+        digitalWrite(outputPinB, HIGH);
+      }
     }
-
-    int currentOutputPinValue = digitalRead(currentOutputPin);
-    if (currentOutputPinValue == LOW) {
-      digitalWrite(currentOutputPin, HIGH);
-    } else {
-      digitalWrite(currentOutputPin, LOW);
-    }
-
- 
+  } else {
+    Serial.println("Input is off, switching off both output pins");
+    digitalWrite(outputPinA, LOW);
+    digitalWrite(outputPinB, LOW);
   }
-  delay(1000);
 }
