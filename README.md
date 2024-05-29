@@ -2,6 +2,25 @@
 
 ## Explanation:
 
+
+## Power Supply:
+
+The positive terminal of the 12V power supply is connected to the positive terminals of both solenoids.
+The negative terminal of the 12V power supply is connected to the ground.
+
+## Solenoids:
+Solenoid1 and Solenoid2 are connected in parallel, each with a flyback diode (D1 and D2) across them to protect against voltage spikes.
+The negative terminal of each solenoid is connected to the drain of its respective MOSFET (MOSFET1 and MOSFET2).
+MOSFETs:
+
+The source of each MOSFET is connected to the ground.
+The gate of each MOSFET is connected to an Arduino output pin through a 10k ohm resistor (R1 and R2).
+Arduino:
+
+The input signal is connected to Arduino digital pin 2 and is pulsed ground.
+Arduino digital pins 3 and 4 control the gates of MOSFET1 and MOSFET2 respectively.
+SW1 represents the input signal, which is a pulsed ground connection
+
 ### Pins Setup:
 inputPin is set to pin 0.
 outputPinA and outputPinB are set to pins 3 and 4 respectively.
@@ -77,9 +96,6 @@ If the input is LOW, both solenoids are turned off.
  |      |    D1     |
  |      |           |
  |      |           |
- |      |           |
- |      |           |
- |      |           |
  |      |          (|)
  |      |       MOSFET1
  |      |        (IRF540)
@@ -100,9 +116,6 @@ If the input is LOW, both solenoids are turned off.
  |             |    D2     |
  |             |           |
  |             |           |
- |             |           |
- |             |           |
- |             |           |
  |             |          (|)
  |             |       MOSFET2
  |             |        (IRF540)
@@ -120,21 +133,29 @@ Arduino
 |                |
 |  +----+        |
 |  |    |        |
-|  | 2  |--------+
+|  | 2  |----+
+|  |    |    |
+|  |    |   (|)
+|  |    |   SW1
+|  |    |   (|)
+|  |    |    |
+|  |    |   GND
 |  |    |
-|  | 3  |------------------+
-|  |    |       |          |
-|  | 4  |-------|--------+ |
-|  +----+       |        | |
-|               |        | |
-|               R1       | R2
-|               |        | |
-|               +---/\/--+ |
-|               |    10k  | |
-|               |         | |
-|               |        | |
-|               |        | |
-|               |        | |
+|  | 3  |--------|-------+
+|  |    |       R1       |
+|  |    |       |        |
+|  |    |       +--/\/\--+
+|  |    |       |   10k  |
+|  |    |       |        |
+|  | 4  |-------|--------+
+|  |    |       R2       |
+|  |    |       |        |
+|  |    |       +--/\/\--+
+|  |    |       |   10k  |
+|  |    |       |        |
+|  +----+       |        |
+|               |        |
+|               |        |
 |              G1       G2
 |           MOSFET1   MOSFET2
 |           (Gate)    (Gate)
@@ -144,6 +165,7 @@ Notes:
 - G1 and G2 are the gates of MOSFET1 and MOSFET2 respectively.
 - D1 and D2 are flyback diodes (1N4007).
 - R1 and R2 are 10k ohm resistors.
+- SW1 represents the input signal, a pulsed ground.
 ```
 
 ## Component Descriptions:

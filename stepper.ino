@@ -21,10 +21,9 @@ void loop() {
   Serial.println(inputPin);
 
   int inputState = digitalRead(inputPin);
-  Serial.println("Current input state of:");
-  Serial.println(inputState);
 
-  if (inputState == HIGH) {
+  if (inputState == LOW) {
+    Serial.println("Input is pulled to ground");
     unsigned long currentMillis = millis();
 
     if (currentMillis - previousMillis >= interval) {
@@ -53,7 +52,7 @@ void loop() {
       }
     }
   } else {
-    Serial.println("Input is off, switching off both output pins");
+    Serial.println("Input is not grounded, switching off both output pins");
     digitalWrite(outputPinA, LOW);
     digitalWrite(outputPinB, LOW);
   }
