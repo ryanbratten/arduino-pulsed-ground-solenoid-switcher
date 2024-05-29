@@ -1,4 +1,4 @@
-const int inputPin = A0;
+const int inputPin = 2;
 const int outputPinA = 3;
 const int outputPinB = 4;
 
