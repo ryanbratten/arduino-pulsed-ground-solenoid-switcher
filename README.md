@@ -10,7 +10,7 @@ The negative terminal of the 12V power supply is connected to the ground.
 ### Pins Setup:
 
 inputPin is set to pin 2.
-outputPinA and outputPinB are set to pins 3 and 4 respectively.
+outputPinA and outputPinB are set to pins 3 and 4.
 
 ### Interval Calculation:
 
